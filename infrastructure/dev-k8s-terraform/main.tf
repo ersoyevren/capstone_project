@@ -25,6 +25,8 @@ resource "aws_security_group" "petclinic-mutual-sg" {
 resource "aws_security_group" "petclinic-kube-worker-sg" {
   name = var.sec-gr-k8s-worker
 
+##? buradaki mutual ne ise yariyorl.
+
   ingress {
     protocol = "tcp"
     from_port = 10250
@@ -146,12 +148,12 @@ resource "aws_security_group" "petclinic-kube-master-sg" {
 }
 
 resource "aws_instance" "kube-master" {
-    ami = "ami-013f17f36f8b1fefb"
+    ami = "ami-026b57f3c383c2eec"
     instance_type = "t3a.medium"
     iam_instance_profile = module.iam.master_profile_name
     vpc_security_group_ids = [aws_security_group.petclinic-kube-master-sg.id, aws_security_group.petclinic-mutual-sg.id]
     key_name = "clarus"
-    subnet_id = "subnet-c41ba589"  # select own subnet_id of us-east-1a
+    subnet_id = "subnet-04025aa915dc9df2e"  # select own subnet_id of us-east-1a
     availability_zone = "us-east-1a"
     tags = {
         Name = "kube-master"
@@ -164,12 +166,12 @@ resource "aws_instance" "kube-master" {
 }
 
 resource "aws_instance" "worker-1" {
-    ami = "ami-013f17f36f8b1fefb"
+    ami = "ami-026b57f3c383c2eec"
     instance_type = "t3a.medium"
-    iam_instance_profile = module.iam.worker_profile_name
+        iam_instance_profile = module.iam.worker_profile_name
     vpc_security_group_ids = [aws_security_group.petclinic-kube-worker-sg.id, aws_security_group.petclinic-mutual-sg.id]
     key_name = "clarus"
-    subnet_id = "subnet-c41ba589"  # select own subnet_id of us-east-1a
+    subnet_id = "subnet-04025aa915dc9df2e"  # select own subnet_id of us-east-1a
     availability_zone = "us-east-1a"
     tags = {
         Name = "worker-1"
@@ -182,12 +184,12 @@ resource "aws_instance" "worker-1" {
 }
 
 resource "aws_instance" "worker-2" {
-    ami = "ami-013f17f36f8b1fefb"
+    ami = "ami-026b57f3c383c2eec"
     instance_type = "t3a.medium"
     iam_instance_profile = module.iam.worker_profile_name
     vpc_security_group_ids = [aws_security_group.petclinic-kube-worker-sg.id, aws_security_group.petclinic-mutual-sg.id]
     key_name = "clarus"
-    subnet_id = "subnet-c41ba589"  # select own subnet_id of us-east-1a
+    subnet_id = "subnet-04025aa915dc9df2e"  # select own subnet_id of us-east-1a
     availability_zone = "us-east-1a"
     tags = {
         Name = "worker-2"
